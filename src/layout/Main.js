@@ -11,11 +11,11 @@ const Main = () => {
     <div>
       <Header></Header>
       <div>
-        <Row>
-          <Col lg={2}>
-            <LeftSideNav></LeftSideNav>
+        <Row className="w-100">
+          <Col lg={2} className="d-none d-lg-block">
+            <LeftSideNav bgC="light" variantC="outline-secondary"></LeftSideNav>
           </Col>
-          <Col lg={7}>
+          <Col lg={7} className="min-vh-100">
             <Outlet></Outlet>
           </Col>
           <Col lg={3}>
