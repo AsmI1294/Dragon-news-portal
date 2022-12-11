@@ -17,14 +17,17 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const [user, setUser] = useState({ displayName: null });
-
+  const [loading, setLoading] = useState(true);
   const providerGoogle = new GoogleAuthProvider();
   const providerGithub = new GithubAuthProvider();
 
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
   const logInWithPassword = (email, password) => {
+    setLoading(true);
+
     return signInWithEmailAndPassword(auth, email, password);
   };
   const addNamePhoto = (name, url) => {
@@ -34,17 +37,24 @@ const AuthProvider = ({ children }) => {
     });
   };
   const googleLogIn = () => {
+    setLoading(true);
+
     return signInWithPopup(auth, providerGoogle);
   };
   const gitHubLogIn = () => {
+    setLoading(true);
+
     return signInWithPopup(auth, providerGithub);
   };
   const logOut = () => {
+    setLoading(true);
+
     return signOut(auth);
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
     return () => {
       unsubscribe();
@@ -58,6 +68,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     logInWithPassword,
     addNamePhoto,
+    loading,
   };
   return (
     <div>
